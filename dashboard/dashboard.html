@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LinkedIn Feedless Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar" aria-label="Dashboard sections">
+        <div class="brand">
+          <img src="../assets/icons/icon-48.png" alt="" aria-hidden="true">
+          <div>
+            <span>LinkedIn Feedless</span>
+            <strong>Dashboard</strong>
+          </div>
+        </div>
+
+        <nav class="side-nav">
+          <button class="nav-item is-active" type="button" data-view="saved">
+            <span class="nav-icon nav-icon--saved" aria-hidden="true"></span>
+            <span>Saved Posts</span>
+            <strong id="savedCount">0</strong>
+          </button>
+          <div id="savedFolderNav" class="saved-folder-nav" aria-label="Saved post folders"></div>
+          <button class="nav-item" type="button" data-view="hidden">
+            <span class="nav-icon nav-icon--hidden" aria-hidden="true"></span>
+            <span>Hidden Posts</span>
+            <strong id="hiddenCount">0</strong>
+          </button>
+          <button class="nav-item" type="button" data-view="highlight">
+            <span class="nav-icon nav-icon--highlight" aria-hidden="true"></span>
+            <span>Highlight Posts</span>
+            <strong id="highlightCount">0</strong>
+          </button>
+          <button class="nav-item" type="button" data-view="settings">
+            <span class="nav-icon nav-icon--settings" aria-hidden="true"></span>
+            <span>Settings</span>
+          </button>
+        </nav>
+
+        <button id="openLinkedInButton" class="sidebar-action" type="button">Open LinkedIn</button>
+      </aside>
+
+      <main class="main">
+        <header class="page-header">
+          <div>
+            <p id="viewKicker">Library</p>
+            <h1 id="viewTitle">Saved Posts</h1>
+          </div>
+          <label class="search" for="searchInput">
+            <span aria-hidden="true"></span>
+            <input id="searchInput" type="search" placeholder="Search posts">
+          </label>
+        </header>
+
+        <section class="summary" aria-label="Library summary">
+          <article>
+            <span>Saved</span>
+            <strong id="summarySaved">0</strong>
+          </article>
+          <article>
+            <span>Hidden</span>
+            <strong id="summaryHidden">0</strong>
+          </article>
+          <article>
+            <span>Highlight groups</span>
+            <strong id="summaryGroups">0</strong>
+          </article>
+          <article>
+            <span>Highlight words</span>
+            <strong id="summaryHighlightWords">0</strong>
+          </article>
+        </section>
+
+        <section id="settingsPanel" class="settings-panel" hidden>
+          <label class="switch-row" for="autoHidePromotedToggle">
+            <strong>Auto-hide promoted posts</strong>
+            <input id="autoHidePromotedToggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+          <label class="switch-row" for="autoCleanHiddenToggle">
+            <strong>Auto-clean hidden posts</strong>
+            <input id="autoCleanHiddenToggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+          <div class="retention-row" id="hiddenRetentionControls">
+            <span>Clean after</span>
+            <input id="hiddenRetentionAmount" type="number" min="1" max="365" step="1" inputmode="numeric">
+            <select id="hiddenRetentionUnit">
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+            </select>
+          </div>
+          <label class="switch-row" for="darkModeToggle">
+            <strong>Dark mode</strong>
+            <input id="darkModeToggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+          <label class="switch-row" for="hiddenRulesEnabledToggle">
+            <strong>Auto-hide matching posts</strong>
+            <input id="hiddenRulesEnabledToggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+          <label class="switch-row" for="highlightEnabledToggle">
+            <strong>Highlight matching posts</strong>
+            <input id="highlightEnabledToggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+          <label class="language-row" for="languageSelect">
+            <span>
+              <strong>Language</strong>
+              <small>Changes popup, dashboard, and LinkedIn buttons</small>
+            </span>
+            <select id="languageSelect" aria-label="Extension language">
+              <option value="en">English</option>
+              <option value="pt-BR">Portugues (Brasil)</option>
+              <option value="es">Espanol</option>
+              <option value="de">Deutsch</option>
+              <option value="fr">Francais</option>
+            </select>
+          </label>
+          <div class="storage-row" aria-label="Extension storage usage">
+            <div>
+              <strong>Storage used</strong>
+              <small>Local data saved by the extension</small>
+            </div>
+            <span id="storageUsageValue">Calculating...</span>
+          </div>
+          <div class="storage-row memory-row" aria-label="Extension memory usage">
+            <div>
+              <strong>Memory usage</strong>
+              <small>Approximate JS heap for this extension page</small>
+            </div>
+            <span id="memoryUsageValue">Calculating...</span>
+          </div>
+        </section>
+
+        <section id="timeline" class="timeline" aria-live="polite"></section>
+
+        <section id="emptyState" class="empty" hidden>
+          <h2 id="emptyTitle">Nothing here yet</h2>
+          <p id="emptyText">Items will appear here.</p>
+        </section>
+      </main>
+
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden>Changes saved</div>
+    </div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

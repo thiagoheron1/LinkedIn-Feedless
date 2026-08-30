@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LinkedIn Feedless</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand">
+          <img class="brand-mark" src="../assets/icons/icon-48.png" alt="" aria-hidden="true">
+          <div>
+            <p>LinkedIn Feedless</p>
+            <h1 id="viewTitle">Saved Posts</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button id="openLinkedInButton" class="icon-button" type="button" title="Open LinkedIn" aria-label="Open LinkedIn">
+            <span aria-hidden="true"></span>
+          </button>
+          <button id="openDashboardButton" class="text-button" type="button">Dashboard</button>
+          <button id="settingsButton" class="text-button" type="button" aria-pressed="false">Settings</button>
+        </div>
+      </header>
+
+      <nav class="tabs" aria-label="Popup views" role="tablist">
+        <button class="tab is-active" id="savedTab" type="button" role="tab" aria-selected="true">
+          <span>Saved Posts</span>
+          <strong id="savedTabCount">0</strong>
+        </button>
+        <button class="tab" id="hiddenTab" type="button" role="tab" aria-selected="false">
+          <span>Hidden Posts</span>
+          <strong id="hiddenTabCount">0</strong>
+        </button>
+        <button class="tab" id="highlightTab" type="button" role="tab" aria-selected="false">
+          <span>Highlight Posts</span>
+          <strong id="highlightTabCount">0</strong>
+        </button>
+        <button class="tab" id="analyticsTab" type="button" role="tab" aria-selected="false">
+          <span>Analytics</span>
+        </button>
+      </nav>
+
+      <section class="analytics-panel" id="analyticsPanel" aria-label="Analytics" hidden>
+        <div class="section-heading">
+          <h2>Analytics</h2>
+        </div>
+        <div class="analytics-metrics">
+          <article><span>Hidden posts</span><strong id="analyticsHiddenTotal">0</strong></article>
+          <article><span>Promoted posts hidden</span><strong id="analyticsPromotedTotal">0</strong></article>
+          <article><span>Hidden-post time saved</span><strong id="analyticsHiddenTime">0s</strong><small>4 seconds per post</small></article>
+          <article><span>Promoted-post time saved</span><strong id="analyticsPromotedTime">0s</strong><small>3 seconds per post</small></article>
+        </div>
+        <div class="analytics-groups">
+          <h3>Highlighted posts by group</h3>
+          <div id="analyticsGroupList"></div>
+        </div>
+      </section>
+
+      <section class="settings-panel" id="settingsPanel" aria-label="Settings" hidden>
+        <div class="section-heading">
+          <h2>Settings</h2>
+        </div>
+        <div class="settings-list">
+          <label class="switch-row" for="autoHidePromotedToggle">
+            <strong>Auto-hide promoted posts</strong>
+            <input id="autoHidePromotedToggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+          <label class="switch-row" for="autoCleanHiddenToggle">
+            <strong>Auto-clean hidden posts</strong>
+            <input id="autoCleanHiddenToggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+          <div class="retention-row" id="hiddenRetentionControls">
+            <span>Clean after</span>
+            <input id="hiddenRetentionAmount" type="number" min="1" max="365" step="1" inputmode="numeric" aria-label="Hidden post cleanup amount">
+            <select id="hiddenRetentionUnit" aria-label="Hidden post cleanup unit">
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+            </select>
+          </div>
+          <div class="backup-row">
+            <span>
+              <strong>Backup and restore</strong>
+              <small>Export all settings and post records to a private JSON file</small>
+            </span>
+            <div class="backup-actions">
+              <button id="exportBackupButton" type="button">Export</button>
+              <button id="importBackupButton" type="button">Import</button>
+              <input id="importBackupInput" type="file" accept="application/json,.json" hidden>
+            </div>
+          </div>
+          <label class="switch-row" for="darkModeToggle">
+            <strong>Dark mode</strong>
+            <input id="darkModeToggle" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+          <label class="language-row" for="languageSelect">
+            <span>
+              <strong>Language</strong>
+              <small>Changes popup, dashboard, and LinkedIn buttons</small>
+            </span>
+            <select id="languageSelect" aria-label="Extension language">
+              <option value="en">English</option>
+              <option value="pt-BR">Portugues (Brasil)</option>
+              <option value="es">Espanol</option>
+              <option value="de">Deutsch</option>
+              <option value="fr">Francais</option>
+            </select>
+          </label>
+          <div class="storage-row" aria-label="Extension storage usage">
+            <div>
+              <strong>Storage used</strong>
+              <small>Local data saved by the extension</small>
+            </div>
+            <span id="storageUsageValue">Calculating...</span>
+          </div>
+          <div class="storage-row memory-row" aria-label="Extension memory usage">
+            <div>
+              <strong>Memory usage</strong>
+              <small>Approximate JS heap for this extension page</small>
+            </div>
+            <span id="memoryUsageValue">Calculating...</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="highlight-panel" id="highlightPanel" aria-label="Highlight posts" hidden>
+        <div class="section-heading">
+          <h2>Highlight Posts</h2>
+          <span id="highlightCount">0</span>
+        </div>
+        <p class="highlight-description">Create a group first, then open it to add words or sentences. Top groups have priority.</p>
+        <label class="switch-row feature-switch" for="highlightEnabledToggle">
+          <strong>Highlight matching posts</strong>
+          <input id="highlightEnabledToggle" type="checkbox">
+          <span class="switch-track" aria-hidden="true"></span>
+        </label>
+        <form class="highlight-form" id="highlightForm">
+          <input id="highlightGroupValue" type="text" placeholder="New group name, e.g. Jobs" aria-label="Highlight group name" autocomplete="off">
+          <div class="highlight-color-field">
+            <input id="highlightColor" class="color-input" type="color" value="#164e63" aria-label="Highlight color">
+            <input id="highlightColorHex" class="color-hex color-hex-input" type="text" value="#164E63" maxlength="7" spellcheck="false" aria-label="Highlight color hex">
+          </div>
+          <button id="addHighlightButton" class="icon-button primary" type="submit" title="Create group" aria-label="Create highlight group">
+            <span aria-hidden="true">+</span>
+          </button>
+        </form>
+        <div class="highlight-list" id="highlightList"></div>
+        <div class="highlight-pager" id="highlightPager" hidden>
+          <button id="highlightPrevPage" class="pager-button" type="button">Previous</button>
+          <span id="highlightPageInfo">Page 1 of 1</span>
+          <button id="highlightNextPage" class="pager-button" type="button">Next</button>
+        </div>
+      </section>
+
+      <section class="hidden-rule-panel" id="hiddenRulePanel" aria-label="Auto-hide words" hidden>
+        <div class="section-heading">
+          <h2>Auto-hide Words</h2>
+          <span id="hiddenRuleCount">0</span>
+        </div>
+        <p class="hidden-rule-description">Add a word or sentence. Matching posts will be hidden automatically.</p>
+        <label class="switch-row feature-switch" for="hiddenRulesEnabledToggle">
+          <strong>Auto-hide matching posts</strong>
+          <input id="hiddenRulesEnabledToggle" type="checkbox">
+          <span class="switch-track" aria-hidden="true"></span>
+        </label>
+        <form class="hidden-rule-form" id="hiddenRuleForm">
+          <input id="hiddenRuleValue" type="text" placeholder="Word or sentence" aria-label="Auto-hide word or sentence" autocomplete="off">
+          <button id="addHiddenRuleButton" class="icon-button primary" type="submit" title="Add auto-hide rule" aria-label="Add auto-hide rule">
+            <span aria-hidden="true">+</span>
+          </button>
+        </form>
+        <div class="hidden-rule-list" id="hiddenRuleList"></div>
+      </section>
+
+      <section class="controls" id="controls">
+        <label class="search" for="searchInput">
+          <span aria-hidden="true"></span>
+          <input id="searchInput" type="search" placeholder="Search saved posts">
+        </label>
+        <label class="hidden-sort" id="hiddenSortGroup" for="hiddenSortSelect" hidden>
+          <span>Sort</span>
+          <select id="hiddenSortSelect" aria-label="Sort hidden posts">
+            <option value="desc">Newest hidden</option>
+            <option value="asc">Oldest hidden</option>
+          </select>
+        </label>
+        <button id="clearHiddenButton" class="text-button danger" type="button" hidden>Clear Hidden</button>
+      </section>
+
+      <section class="folder-panel" id="folderPanel" aria-label="Saved post folders" hidden>
+        <div class="folder-group">
+          <div class="folder-heading">
+            <div class="folder-heading-text">
+              <strong>Folders</strong>
+              <small id="folderHint">Saved library</small>
+            </div>
+            <div class="folder-heading-actions">
+              <label class="folder-sort" for="folderSortSelect">
+                <span>Order</span>
+                <select id="folderSortSelect" aria-label="Order folders">
+                  <option value="custom">Custom</option>
+                  <option value="nameAsc">Name A-Z</option>
+                  <option value="nameDesc">Name Z-A</option>
+                </select>
+              </label>
+              <button id="addFolderButton" class="folder-add-button" type="button" title="Add folder" aria-label="Add folder">
+                <span aria-hidden="true">+</span>
+              </button>
+            </div>
+          </div>
+          <div class="folder-tree" id="folderStrip" aria-label="Folders"></div>
+        </div>
+
+        <div class="folder-group subfolder-group" id="subfolderGroup" hidden>
+          <div class="folder-heading">
+            <div class="folder-heading-text">
+              <strong>Subfolders</strong>
+              <small id="subfolderHint">Choose a folder first</small>
+            </div>
+            <button id="addSubfolderButton" class="folder-add-button secondary" type="button" title="Add subfolder" aria-label="Add subfolder">
+              <span aria-hidden="true">+</span>
+            </button>
+          </div>
+          <div class="folder-strip subfolder-strip" id="subfolderStrip" aria-label="Subfolders"></div>
+        </div>
+      </section>
+
+      <section id="list" class="list" aria-live="polite"></section>
+      <div class="highlight-pager hidden-pager" id="hiddenPager" hidden>
+        <button id="hiddenPrevPage" class="pager-button" type="button">Previous</button>
+        <span id="hiddenPageInfo">Page 1 of 1</span>
+        <button id="hiddenNextPage" class="pager-button" type="button">Next</button>
+      </div>
+
+      <section id="emptyState" class="empty" hidden>
+        <div class="empty-icon" aria-hidden="true"></div>
+        <h2 id="emptyTitle">Nothing saved yet</h2>
+        <p id="emptyText">Saved posts will appear here.</p>
+      </section>
+
+      <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+        Changes saved
+      </div>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

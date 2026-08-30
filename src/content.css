@@ -1,0 +1,429 @@
+.lf-enhanced {
+  position: relative !important;
+}
+
+.lf-hidden-related-comment {
+  display: none !important;
+}
+
+.lf-hidden-post {
+  display: block !important;
+  min-height: 0 !important;
+}
+
+.lf-control-host.lf-hidden-post {
+  display: block !important;
+}
+
+.lf-hidden-post > :not(.lf-hidden-placeholder) {
+  display: none !important;
+}
+
+.lf-hidden-placeholder {
+  align-items: center;
+  background: #f6f8fa;
+  border: 1px solid #d5e0e5;
+  border-radius: 7px;
+  color: #60717c;
+  display: flex !important;
+  font: 700 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  gap: 8px;
+  justify-content: space-between;
+  margin: 4px 0;
+  min-height: 30px;
+  padding: 5px 8px;
+  width: 100%;
+}
+
+.lf-hidden-placeholder-message {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lf-hidden-reveal {
+  background: transparent;
+  border: 0;
+  color: #0a66c2;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font: 800 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 3px 5px;
+}
+
+.lf-hidden-reveal:hover {
+  text-decoration: underline;
+}
+
+.lf-highlighted-post {
+  background-color: var(--lf-highlight-color, #164e63) !important;
+  box-shadow:
+    inset 4px 0 0 rgba(15, 23, 42, 0.26),
+    0 0 0 1px rgba(15, 23, 42, 0.12) !important;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.lf-toolbar {
+  --lf-control-width: 116px;
+  align-items: start;
+  display: grid;
+  gap: 4px;
+  margin-inline-end: 6px;
+  position: relative;
+  z-index: 30;
+}
+
+.lf-toolbar-actions {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+.lf-toolbar--fallback {
+  inset-inline-end: 52px;
+  margin-inline-end: 0;
+  position: absolute;
+  top: 10px;
+}
+
+.lf-control-host {
+  align-items: center !important;
+  display: inline-flex !important;
+  gap: 6px !important;
+}
+
+.lf-control-host.lf-hide-pending,
+.lf-hide-pending {
+  display: block !important;
+  min-height: 40px !important;
+}
+
+.lf-hide-pending > :not(.lf-inline-undo) {
+  display: none !important;
+}
+
+.lf-action {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #c5ced6;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+  color: #1d2935;
+  cursor: pointer;
+  display: inline-flex;
+  font: 600 12px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  gap: 5px;
+  inline-size: var(--lf-control-width);
+  justify-content: center;
+  min-height: 28px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 5px 8px;
+  text-overflow: ellipsis;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+  white-space: nowrap;
+}
+
+.lf-action:hover {
+  background: #f0f7fb;
+  border-color: #47738f;
+  color: #0d4f71;
+}
+
+.lf-action:active {
+  transform: translateY(1px);
+}
+
+.lf-action[data-kind="hide"]:hover {
+  background: #fff4f1;
+  border-color: #bd624c;
+  color: #8f2e1b;
+}
+
+.lf-action[data-saved="true"] {
+  background: #eff9f1;
+  border-color: #6aaa77;
+  color: #225c30;
+}
+
+.lf-highlight-match {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  border-radius: 7px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  color: #263644;
+  display: inline-flex;
+  font: 700 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  justify-self: start;
+  inline-size: var(--lf-control-width);
+  justify-content: center;
+  max-inline-size: var(--lf-control-width);
+  min-height: 22px;
+  overflow: hidden;
+  padding: 3px 7px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lf-save-notice {
+  align-items: center;
+  background: #eff9f1;
+  border: 1px solid #b8d4c9;
+  border-radius: 7px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  color: #225c30;
+  display: inline-flex;
+  font: 800 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  justify-self: start;
+  min-height: 22px;
+  padding: 3px 7px;
+  white-space: nowrap;
+}
+
+.lf-save-menu {
+  background: #ffffff;
+  border: 1px solid #c5ced6;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+  color: #1d2935;
+  inline-size: 240px;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+  top: 38px;
+  z-index: 30;
+}
+
+.lf-save-menu-title {
+  color: #526070;
+  font: 700 11px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+  padding: 4px 6px 7px;
+  text-transform: uppercase;
+}
+
+.lf-folder-option {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: #1d2935;
+  cursor: pointer;
+  display: flex;
+  font: 600 13px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  inline-size: 100%;
+  justify-content: space-between;
+  min-height: 32px;
+  padding: 8px 9px;
+  text-align: left;
+}
+
+.lf-folder-option:hover {
+  background: #edf4f7;
+}
+
+.lf-folder-option[data-subfolder="true"] {
+  color: #425466;
+  padding-inline-start: 18px;
+}
+
+.lf-folder-option[data-create="true"] {
+  color: #0d4f71;
+}
+
+.lf-inline-undo {
+  align-items: center;
+  background: #fff7ed;
+  border: 1px solid #f3c79b;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  color: #6f3b09;
+  font: 700 13px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  gap: 10px;
+  justify-content: space-between;
+  margin: 8px 0;
+  max-width: none;
+  min-height: 46px;
+  padding: 9px 11px 9px 13px;
+  width: 100%;
+}
+
+.lf-inline-undo-message {
+  align-items: center;
+  display: flex;
+  min-width: 0;
+}
+
+.lf-inline-undo-message span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lf-inline-undo-actions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.lf-inline-countdown {
+  align-items: center;
+  background: rgba(124, 63, 0, 0.1);
+  border: 1px solid rgba(124, 63, 0, 0.2);
+  border-radius: 8px;
+  display: inline-flex;
+  font: 900 13px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  height: 28px;
+  justify-content: center;
+  min-width: 0;
+  width: 28px;
+}
+
+.lf-inline-undo button {
+  background: #ffffff;
+  border: 1px solid #e2b27f;
+  border-radius: 8px;
+  color: #7c3f00;
+  cursor: pointer;
+  flex: 0 0 auto;
+  font: 800 12px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 28px;
+  padding: 5px 9px;
+}
+
+.lf-inline-undo button:hover {
+  background: #fff1df;
+  border-color: #c98235;
+}
+
+.lf-inline-undo button:focus-visible {
+  outline: 2px solid #c98235;
+  outline-offset: 2px;
+}
+
+.lf-theme-dark .lf-action {
+  background: #1d242b;
+  border-color: #34404a;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  color: #edf2f7;
+}
+
+.lf-theme-dark .lf-action:hover {
+  background: #24313b;
+  border-color: #5d93b4;
+  color: #d6f0ff;
+}
+
+.lf-theme-dark .lf-action[data-kind="hide"]:hover {
+  background: #3a211f;
+  border-color: #bd6a5a;
+  color: #ffd3c9;
+}
+
+.lf-theme-dark .lf-action[data-saved="true"] {
+  background: #173628;
+  border-color: #3d8d65;
+  color: #c8f4da;
+}
+
+.lf-theme-dark .lf-highlight-match {
+  background: rgba(29, 36, 43, 0.9);
+  border-color: rgba(216, 229, 239, 0.18);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.24);
+  color: #d7e4ee;
+}
+
+.lf-theme-dark .lf-save-notice {
+  background: #173628;
+  border-color: #3d8d65;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.24);
+  color: #c8f4da;
+}
+
+.lf-theme-dark .lf-save-menu {
+  background: #151a20;
+  border-color: #34404a;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+  color: #edf2f7;
+}
+
+.lf-theme-dark .lf-save-menu-title {
+  color: #a8b4bf;
+}
+
+.lf-theme-dark .lf-folder-option {
+  color: #edf2f7;
+}
+
+.lf-theme-dark .lf-folder-option:hover {
+  background: #24313b;
+}
+
+.lf-theme-dark .lf-folder-option[data-subfolder="true"] {
+  color: #b9c7d2;
+}
+
+.lf-theme-dark .lf-folder-option[data-create="true"] {
+  color: #8fccff;
+}
+
+.lf-theme-dark .lf-inline-undo {
+  background: #3a211f;
+  border-color: #8b4a3d;
+  color: #ffd3c9;
+}
+
+.lf-theme-dark .lf-hidden-placeholder {
+  background: #1d242b;
+  border-color: #34404a;
+  color: #a8b4bf;
+}
+
+.lf-theme-dark .lf-hidden-reveal {
+  color: #8fccff;
+}
+
+.lf-theme-dark .lf-inline-undo button {
+  background: #251d1c;
+  border-color: #8b4a3d;
+  color: #ffd3c9;
+}
+
+.lf-theme-dark .lf-inline-countdown {
+  background: rgba(255, 211, 201, 0.1);
+  border-color: rgba(255, 211, 201, 0.22);
+}
+
+.lf-theme-dark .lf-inline-undo button:hover {
+  background: #4a2824;
+  border-color: #bd6a5a;
+}
+
+@media (max-width: 900px) {
+  .lf-toolbar--fallback {
+    inset-inline-end: 44px;
+    top: 8px;
+  }
+
+  .lf-action {
+    min-height: 28px;
+    padding: 5px 7px;
+  }
+
+  .lf-highlight-match {
+    max-inline-size: 150px;
+  }
+
+  .lf-inline-undo {
+    max-width: 100%;
+  }
+}
